@@ -1,0 +1,94 @@
+import { PrismaClient } from "@prisma/client";
+import express from "express";
+
+const app = express();
+const port = 3000;
+const prisma = new PrismaClient();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const auth =()=>{
+
+}
+
+app.get("/", async (req, res) => {
+  try {
+    const students = await prisma.students.findMany();
+
+    let htmlContent = "<h1>Students</h1><ul>";
+    students.forEach((student) => {
+      htmlContent += `<li>${student.username} - ${student.email}</li>`;
+    });
+    htmlContent += "</ul>";
+    htmlContent += `<a href="/students"><button>ADD STUDENT</button></a>`;
+
+    res.send(htmlContent);
+  } catch (error) {
+    console.error("Loading Failed:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/students", (req, res) => {
+  const htmlContent = `
+    <h1>ADD NEW STUDENT</h1>
+    <form id="addStudent">
+      <label for="username">Name:</label>
+      <input type="text" id="username" name="username" required /><br /><br />
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required /><br /><br />
+      <button type="submit">Add</button>
+    </form>
+    <a href="/"><button>Return</button></a>
+
+    <script>
+      document.getElementById('addStudent').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+
+        try {
+          const response = await fetch('/students', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email }),
+          });
+
+          if (response.ok) {
+            alert('Student Created Successfully');
+            window.location.href = '/';
+          } else {
+            const errorMessage = await response.text();
+            alert(errorMessage || 'Something went wrong! Please try again.');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert(error.message);
+        }
+      });
+    </script>
+  `;
+
+  res.send(htmlContent);
+});
+
+app.post("/students", async (req, res) => {
+ 
+    const { username, email } = req.body;
+    const newStudent = await prisma.students.create({
+      data: {
+        username,
+        email,
+      },
+    });
+    
+    res.json(newStudent);
+
+});
+
+app.listen(port, () => {
+
+});

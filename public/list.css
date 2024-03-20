@@ -1,0 +1,84 @@
+html {
+  background-color: rgb(57, 57, 74);
+}
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(83, 237, 229);
+  font-size: 40px;
+}
+
+#studentList {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  color: rgb(83, 237, 229);
+}
+#studentList li {
+  padding: 5px;
+  list-style-type: decimal;
+}
+.header {
+  display: flex;
+  justify-content: center;
+}
+button {
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-weight: 600;
+}
+.removeBtn {
+  position: relative;
+  bottom: 20px;
+  border-radius: 0;
+  text-decoration: none;
+  font-weight: 600;
+  background-color: brown;
+  margin-left: 350px;
+  width: 70px;
+  height: 30px;
+  color: white;
+  border-style: none;
+}
+#addStudentbtn {
+  border: 1px solid lightblue;
+  border-radius: 100%;
+  width: 80px;
+  height: 80px;
+  background-color: transparent;
+  color: rgb(83, 237, 229);
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+input {
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  border-style: none;
+  border-width: 1px;
+  background-color: rgb(147, 176, 176);
+  font-weight: 500;
+  font-size: 1rem;
+}
+input::placeholder {
+  color: white;
+  font-weight: 500;
+}
+input:focus {
+  background-color: rgb(255, 255, 255);
+}
+
+#addStudent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: aqua;
+}
+.btnOrder {
+  display: flex;
+  justify-content: center;
+}

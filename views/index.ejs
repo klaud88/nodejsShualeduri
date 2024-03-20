@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/list.css" />
+  </head>
+  <body>
+    <div class="title">
+      <h1>Students List</h1>
+      <a class="button" href="/students">
+        <button id="addStudentbtn">Add Student</button>
+      </a>
+    </div>
+
+    <div class="header">
+      <ul id="studentList">
+        <% students.forEach((student, index) => { %>
+        <li>
+          ID: <%= student.id %><br />User: <%= student.username %><br />Email:
+          <%= student.email %> </br>
+          <button class="removeBtn" value="<%= student.id %>">Remove</button>
+        </li>
+        <% }); %>
+      </ul>
+    </div>
+
+    <script>
+      const studentList = document.getElementById('studentList');
+
+      studentList.addEventListener('click', async (event) => {
+        if (event.target.classList.contains('removeBtn')) {
+          const studentId = event.target.value;
+          console.log(studentId);
+          try {
+            const response = await fetch('/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ id: studentId }),
+            });
+            if (response.ok) {
+              event.target.parentElement.remove();
+            } else {
+              console.error('Failed to delete student');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

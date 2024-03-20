@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Student</title>
+    <link rel="stylesheet" href="list.css" />
+  </head>
+  <body>
+    <h1>ADD NEW STUDENT</h1>
+    <a href="/"><button id="addStudentbtn">Return</button></a>
+    <form id="addStudent">
+      <label for="username">Name:</label>
+      <input
+        type="text"
+        id="username"
+        placeholder="Name"
+        name="username"
+        required
+      /><br /><br />
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        name="email"
+        required
+      /><br /><br />
+      <button id="addStudentbtn" type="submit">Add</button>
+    </form>
+
+    <script>
+      document
+        .getElementById('addStudent')
+        .addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const username = document.getElementById('username').value;
+          const email = document.getElementById('email').value;
+
+          const response = await fetch('/students', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, email }),
+          });
+
+          if (email.includes('@gmail.com') || email.includes('@mail.com')) {
+            alert('Student Created Successfully');
+            window.location.href = '/';
+          } else {
+            alert('Mail is Incorrect.Allowed mails gmail.com & mail.com');
+          }
+        });
+    </script>
+  </body>
+</html>
